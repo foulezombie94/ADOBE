@@ -1,73 +1,38 @@
-# React + TypeScript + Vite
+# Obsidian Engine
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A professional-grade web-based video editing engine built with React, TypeScript, and Vite. Obsidian Engine provides a high-performance interactive timeline, advanced color grading tools, and comprehensive audio mixing workspaces.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Interactive Timeline**: Real-time video/audio playback and editing with Framer Motion animations.
+- **Advanced Color Grading**: Professional video scopes (Waveform, Parade), color wheels, and curves editor.
+- **Audio Workspace**: Multi-channel mixer with waveform visualization and master channel controls.
+- **Project Management**: System-level project tracking with status monitoring.
+- **Export System**: Detailed export settings and progress tracking.
 
-## React Compiler
+## Installation & Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+2. **Launch development server**:
+   ```bash
+   npm run dev
+   ```
+3. **Build for production**:
+   ```bash
+   npm run build
+   ```
+4. **Typecheck**:
+   ```bash
+   npm run typecheck
+   ```
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `src/components`: Reusable UI components for layout, editing, and visualization.
+- `src/pages`: Major workspace pages (Edit, Color, Audio, Export, Project Manager).
+- `src/store`: Modularized Zustand stores for state management.
+- `src/types`: Strict TypeScript definitions for timeline, media, and effects.
+- `src/utils`: Helper functions for math, canvas drawing, and common utilities.

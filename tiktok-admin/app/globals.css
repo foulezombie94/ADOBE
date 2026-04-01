@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap');
+
+:root {
+  --foreground-rgb: 239, 241, 243;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: #0a0a0c;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, .font-manrope {
+  font-family: 'Manrope', sans-serif;
+}
+
+.glass-card {
+  background: rgba(18, 18, 20, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(199, 196, 216, 0.1);
+}
+
+.surface-container {
+  background: #121214;
+}
+
+.text-on-surface-variant {
+  color: #c7c4d8;
+}
+
+/* Custom Scrollbar for Terminal */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}

@@ -1,21 +1,21 @@
-import { useUIStore } from '../../store';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTimelineStore } from '../../store';
 import { secondsToTimecode } from '../../utils';
-import type { Workspace } from '../../types';
 
-const navItems: { label: string; workspace?: Workspace }[] = [
+const navItems = [
   { label: 'File' },
-  { label: 'Edit', workspace: 'edit' },
+  { label: 'Edit', path: '/edit' },
   { label: 'Clip' },
-  { label: 'Sequence', workspace: 'audio' },
+  { label: 'Sequence', path: '/audio' },
   { label: 'Markers' },
-  { label: 'Graphics', workspace: 'color' },
+  { label: 'Graphics', path: '/color' },
   { label: 'Window' },
   { label: 'Help' },
 ];
 
 export default function Header() {
-  const { workspace, setWorkspace } = useUIStore();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const playheadTime = useTimelineStore((s) => s.playheadTime);
 
   return (
@@ -23,7 +23,7 @@ export default function Header() {
       <div className="flex items-center gap-6">
         <span
           className="text-lg font-bold text-[#e6e4ec] tracking-tighter cursor-pointer"
-          onClick={() => setWorkspace('projects')}
+          onClick={() => navigate('/projects')}
         >
           Obsidian Engine
         </span>
@@ -32,9 +32,9 @@ export default function Header() {
             <a
               key={item.label}
               className={`nav-link cursor-pointer ${
-                item.workspace && workspace === item.workspace ? 'active' : ''
+                item.path && pathname === item.path ? 'active' : ''
               }`}
-              onClick={() => item.workspace && setWorkspace(item.workspace)}
+              onClick={() => item.path && navigate(item.path)}
             >
               {item.label}
             </a>
@@ -42,7 +42,7 @@ export default function Header() {
         </nav>
       </div>
       <div className="flex items-center gap-3">
-        {workspace !== 'projects' && (
+        {pathname !== '/projects' && (
           <div className="bg-[#19191d] rounded px-2 py-0.5 flex items-center gap-2 mr-2">
             <span className="text-[0.625rem] text-on-surface-variant font-mono">
               {secondsToTimecode(playheadTime)}
@@ -51,7 +51,7 @@ export default function Header() {
         )}
         <button
           className="bg-gradient-to-br from-primary to-primary-container text-on-primary text-[0.7rem] font-bold px-4 py-1 rounded-sm transition-transform active:scale-95 cursor-pointer"
-          onClick={() => setWorkspace('export')}
+          onClick={() => navigate('/export')}
         >
           Export
         </button>

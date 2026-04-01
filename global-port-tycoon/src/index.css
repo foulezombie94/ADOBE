@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+
+:root {
+  --color-marine: #1B263B;
+  --color-orange: #F3722C;
+  --color-steel: #495057;
+  --color-profit: #43AA8B;
+  --color-gold: #FFD166;
+  --color-bg: #8ECAE6;
+  --color-white: #FFFFFF;
+  --font-main: 'Montserrat', sans-serif;
+  
+  --chrome-light: #e0e5ec;
+  --chrome-base: #a3b1c6;
+  --chrome-dark: #6b7a90;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+
+body { font-family: var(--font-main); overflow: hidden; background: #000; }
+
+#root { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
+
+.isometric-container {
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--color-marine);
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+
+.hud-overlay {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; display: flex; flex-direction: column; justify-content: space-between; z-index: 10;
+}
+
+.hud-top {
+  display: flex; justify-content: space-between;
+  padding: 15px; padding-top: calc(15px + env(safe-area-inset-top));
+  pointer-events: auto;
+}
+
+.premium-pill {
+  background: linear-gradient(180deg, rgba(80,90,105,0.7) 0%, rgba(30,40,55,0.8) 100%);
+  border: 2px solid var(--chrome-base);
+  border-radius: 20px;
+  padding: 8px 16px;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), 0 4px 10px rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  color: white; font-weight: 700; display: flex; align-items: center; gap: 8px;
+}
+
+.hud-bottom {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 15px; padding-bottom: calc(15px + env(safe-area-inset-bottom));
+  pointer-events: auto;
+}
+
+/* PREMIUM UPGRADE BUTTONS METALLIC */
+.premium-btn-wrapper {
+  background: linear-gradient(180deg, var(--chrome-light) 0%, var(--chrome-dark) 100%);
+  border-radius: 22px;
+  padding: 3px; /* Épaisseur de la bordure chromée */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.8), inset 0 2px 3px rgba(255,255,255,0.8);
+  pointer-events: auto;
+  transition: transform 0.1s;
+}
+.premium-btn-wrapper:active { transform: translateY(2px); box-shadow: 0 4px 10px rgba(0,0,0,0.8); }
+
+.premium-btn-inner {
+  background: linear-gradient(180deg, rgba(60, 75, 95, 0.85) 0%, rgba(20, 30, 45, 0.95) 100%);
+  border-radius: 19px;
+  box-shadow: inset 0 2px 5px rgba(255,255,255,0.2), inset 0 -4px 10px rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  padding: 12px 15px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; overflow: hidden; cursor: pointer;
+}
+
+.premium-btn-wrapper.disabled { filter: grayscale(1) brightness(0.6); pointer-events: none; }
+
+.premium-btn-badge {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(80,95,115,1) 0%, rgba(30,40,50,1) 100%);
+  border: 2px solid var(--chrome-base);
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.3), 0 0 10px rgba(0,255,255,0.1);
+  display: flex; justify-content: center; align-items: center; z-index: 2;
+}
+
+.premium-price-box {
+  background: linear-gradient(180deg, var(--chrome-light) 0%, var(--chrome-base) 100%);
+  color: #121a29; font-weight: 900; font-size: 1.1rem;
+  padding: 8px 16px; border-radius: 10px; border: 1px solid white;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4), inset 0 2px 5px rgba(255,255,255,0.8);
+  z-index: 2;
+}
+
+/* ANIMATIONS DES PARTICULES */
+@keyframes sparkUp {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  20% { opacity: 0.8; }
+  80% { opacity: 0.8; }
+  100% { transform: translateY(-30px) scale(0.5); opacity: 0; }
+}
+
+/* Autres existants */
+.floating-text-layer { position: absolute; top:0; left:0; width:100%; height:100%; z-index:50; pointer-events: none; }
+.floating-text {
+  position: absolute; font-weight: 900; font-size: 1.5rem; color: #43AA8B;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8); animation: floatUpCash 2s ease-out forwards;
+}
+
+@keyframes floatUpCash {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100px); opacity: 0; }
+}
+
+.close-button {
+  border-radius: 50%; border: 2px solid var(--chrome-base);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.4);
+  cursor: pointer;
+}
