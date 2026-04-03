@@ -1,12 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Manrope } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Sidebar from "@/components/Layout/Sidebar";
 import TopBar from "@/components/Layout/TopBar";
 import { Toaster } from "react-hot-toast";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+  display: 'swap',
+});
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  weight: "100 900",
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "Digital Curator | Cockpit Admin",
@@ -23,8 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className="dark">
-      <body className={`${inter.variable} ${manrope.variable} font-body bg-background text-on-background antialiased h-screen overflow-hidden`}>
+    <html lang="fr" className="dark" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans bg-background text-on-background antialiased h-screen overflow-hidden`}>
         <div className="flex h-full w-full">
           <Sidebar />
           <div className="flex flex-col flex-1 h-full min-w-0">

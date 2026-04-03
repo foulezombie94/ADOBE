@@ -43,7 +43,7 @@ export async function PATCH(req: NextRequest) {
     }
 
     // 0. GESTION DU BANNISSEMENT MATÉRIEL (HARDCORE)
-    if (isHardwareBan && status === 'banned') {
+    if (status === 'banned' && isHardwareBan) {
       try {
         // Récupérer les identifiants de l'utilisateur actuel
         const { data: userData } = await supabaseAdmin
@@ -64,6 +64,20 @@ export async function PATCH(req: NextRequest) {
         }
       } catch (hwErr) {
         console.error("ERREUR BAN MATÉRIEL:", hwErr);
+      }
+    } else if (status === 'active') {
+      // DÉBAN MATÉRIEL : Supprimer l'entrée pour autoriser à nouveau l'appareil/IP
+      try {
+        const { error: delError } = await supabaseAdmin
+          .from('banned_hardware')
+          .delete()
+          .eq('original_user_id', userId);
+        
+        if (!delError) {
+          console.log(`✅ SÉCURITÉ : Bannissement matériel supprimé pour l'utilisateur ${userId}`);
+        }
+      } catch (delCatch) {
+        console.error("ERREUR SUPPRESSION BAN MATÉRIEL:", delCatch);
       }
     }
 
@@ -95,19 +109,24 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
-    // 2. Synchronisation avec la couche AUTHENTIFICATION (Supabase Auth Admin)
-    // On verrouille/déverrouille le compte physiquement pour empêcher la connexion
+    // 3. Synchronisation avec la couche AUTHENTIFICATION (Supabase Auth Admin)
     try {
-      // Détermination de la durée (Définitif par défaut si banni, none si actif)
       const banDuration = status === 'active' ? 'none' : (reqBanDuration || '876000h');
       
+      // On met à jour les app_metadata pour que les JWT Claims soient corrects AU PROCHAIN REFRESH
       const { error: authError } = await supabaseAdmin.auth.admin.updateUserById(
         userId,
-        { ban_duration: banDuration }
+        { 
+          ban_duration: banDuration,
+          app_metadata: { 
+            status: status,
+            ban_reason: status === 'active' ? null : (ban_reason || 'N/A')
+          }
+        }
       );
 
       if (authError) {
-        console.error("ERREUR SYNC AUTH (Choix Durée):", authError);
+        console.error("ERREUR SYNC AUTH:", authError);
       }
     } catch (authCatch) {
       console.error("CRASH SYNC AUTH:", authCatch);
